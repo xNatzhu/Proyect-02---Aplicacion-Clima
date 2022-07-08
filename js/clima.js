@@ -1,5 +1,5 @@
-window.addEventListener("load", () => {
 
+window.addEventListener("load", () => {
     //Variables
     let temperaturaGrado = document.getElementById("section_one_column_grado");
     let ciudad = document.getElementById("ciudad");
@@ -9,7 +9,8 @@ window.addEventListener("load", () => {
     let vientoSpeed = document.getElementById("vientoSpeed")
     let temperaturaMax = document.getElementById("temperaturaMax")
     let temperaturaMin = document.getElementById("temperaturaMin")
-    let ciudadURL = `London`
+    let cityForm 
+    let searchForm = document.getElementById("searchForm");
 
     //Funciones
 
@@ -22,9 +23,11 @@ window.addEventListener("load", () => {
         }, 1000);
     }
 
+    fechaContent()
+
     const getTemperature = (main) => {
-        const maxTemp = Math.round(main.temp_max - 273);
-        const minTemp = Math.round(main.temp_min - 273);
+        const maxTemp = Math.round(main.temp_max)
+        const minTemp = Math.round(main.temp_min)
 
         return {maxTemp, minTemp};
     }
@@ -33,7 +36,7 @@ window.addEventListener("load", () => {
 
     function clima(data) {
         console.log(data);
-        let temperaturaGradoValor = Math.round(data.main.temp - 273);
+        let temperaturaGradoValor = Math.round(data.main.temp);
         temperaturaGrado.innerHTML = `${temperaturaGradoValor} °`
 
         ciudad.innerText = data.name
@@ -61,19 +64,16 @@ window.addEventListener("load", () => {
 
     }
 
-    //Funcion constructora intervalo de la actualizacion del clima
-
-    fechaContent()
+    
 
     function getClima(posicion) {
         const {longitude, latitude} = posicion;
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=6752644c4b10d307e40b484055d4f5a5`
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=6752644c4b10d307e40b484055d4f5a5&units=metric`
         fetch(url)
             .then(response => {return response.json()})
             .then(data => {clima(data)})
             .catch(error => {
                 console.log(error)
-                console.log("Hola");
             })
     }
 
@@ -99,13 +99,43 @@ window.addEventListener("load", () => {
 
     init()
 
-    // Actualizar climna cada 5 minutos
-    setInterval(() => {
-        navigator.geolocation.getCurrentPosition(posicion => {
-            getClima(posicion)
-        }, error => {
-            getLocationDefault()
-        })
-    }, 300000);
+    function searchFunction(params) {
+        //handler 
+    
+        //CONFIGURACION FORM
+        params.preventDefault()
+        let contentCity = params.target.nameData.value
+        let expReg= new RegExp("[,.;+-1234567890*]","g");
+        cityForm = contentCity.replace(expReg, "");
+        console.log(cityForm);
+        //API
+
+        const URLAPICITY = `https://api.openweathermap.org/data/2.5/weather?q=${cityForm}&APPID=6752644c4b10d307e40b484055d4f5a5&units=metric`
+        fetch(URLAPICITY)
+            .then(response=>{return response.json()})
+            .then(data=>{
+                clima(data)})
+                .catch(error=>{
+                  console.log(error)
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'La ciudad colocada no existe... ¡Porfavor inténtelo nuevamente!',
+                    background: "#000000ea",
+                    color:"#fff",
+                    confirmButtonColor: "#161616",
+                    width:"40%",
+                  })
+                })
+
+                console.log(URLAPICITY);
+    }
+    
+    
+    //Event
+    
+    searchForm.addEventListener("submit", searchFunction)
+    
+
 
 })
