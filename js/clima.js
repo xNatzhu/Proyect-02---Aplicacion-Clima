@@ -36,17 +36,17 @@ window.addEventListener("load", () => {
 
     function clima(data) {
         console.log(data);
-        let temperaturaGradoValor = Math.round(data.main.temp);
+        let temperaturaGradoValor = Math.round(data.list[0].main.temp);
         temperaturaGrado.innerHTML = `${temperaturaGradoValor} °`
 
-        ciudad.innerText = data.name
+        ciudad.innerText = data.city.name
 
-        let {humidity, pressure} = data.main
+        let {humidity, pressure} = data.list[0].main
         humedad.innerHTML = `${humidity}%`
         presionAtmosferica.innerHTML = `${pressure} hPa`
-        vientoSpeed.innerHTML = `${data.wind.speed} km/h`
+        vientoSpeed.innerHTML = `${data.list[0].wind.speed} km/h`
 
-        const {maxTemp, minTemp} = getTemperature(data.main);
+        const {maxTemp, minTemp} = getTemperature(data.list[0].main);
         temperaturaMax.innerHTML = `${maxTemp}°`
         temperaturaMin.innerHTML = `${minTemp}°`
 
@@ -59,7 +59,7 @@ window.addEventListener("load", () => {
             'Clouds': 'cloudy-day-1.svg',
             'Atmosphere': 'weather.svg'
         }
-        const icon = choiceSvg[data.weather[0].main] || 'cloudy-day-1.svg';
+        const icon = choiceSvg[data.list[0].weather[0].main] || 'cloudy-day-1.svg';
         iconoClima.src = `img/animated/${icon}`;
 
     }
@@ -68,7 +68,7 @@ window.addEventListener("load", () => {
 
     function getClima(posicion) {
         const {longitude, latitude} = posicion;
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=6752644c4b10d307e40b484055d4f5a5&units=metric`
+        const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=6752644c4b10d307e40b484055d4f5a5&units=metric`
         fetch(url)
             .then(response => {return response.json()})
             .then(data => {clima(data)})
@@ -110,7 +110,10 @@ window.addEventListener("load", () => {
         console.log(cityForm);
         //API
 
-        const URLAPICITY = `https://api.openweathermap.org/data/2.5/weather?q=${cityForm}&APPID=6752644c4b10d307e40b484055d4f5a5&units=metric`
+        const URLAPICITY = `https://api.openweathermap.org/data/2.5/forecast?q=${cityForm}&APPID=6752644c4b10d307e40b484055d4f5a5&units=metric`
+
+        /*Para averiguar los dias seleccionados `https://api.openweathermap.org/data/2.5/forecast?q=${cityForm}&APPID=6752644c4b10d307e40b484055d4f5a5&units=metric`*/
+
         fetch(URLAPICITY)
             .then(response=>{return response.json()})
             .then(data=>{

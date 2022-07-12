@@ -37,7 +37,7 @@ body{
     background-size: cover;
     background-image: url(../img/Background/atardecer.jpg);
     color: aliceblue;
-
+    
 }
 
 #asd{
@@ -66,7 +66,7 @@ input{
     padding-left: 10px;
     padding-bottom: 10px;
     font-weight: bold;
-    font-size: 40px;
+    font-size: 30px;
     margin-top: 10px;
     border-bottom: rgba(231, 158, 21, 0) 2px solid;
 }
@@ -83,8 +83,9 @@ input:focus{
     padding-right: 10px;
     padding-left: 10px;
     font-weight: bold;
-    font-size: 40px;
-    margin-top: 10px;
+    font-size: 30px;
+    margin-top: 20px;
+    transition: 0.3s;
 
 }
 
@@ -125,7 +126,7 @@ input::placeholder{
     flex-direction: row;
     color: aliceblue;
     font-weight: bold;
-    height: 25.5cm;
+    
    
 }
 
@@ -137,8 +138,7 @@ input::placeholder{
     background: #0000003f;
     backdrop-filter: blur(6px);
     margin: 100px;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
+    border-radius: 20px;
     padding-top: 30px;
     align-items: center;
     justify-content:space-evenly;
@@ -161,7 +161,7 @@ input::placeholder{
 }
 
 #ciudad{
-    font-size: 60px;
+    font-size: 50px;
     font-weight: normal;
 }
 
@@ -180,12 +180,12 @@ input::placeholder{
 
 /*---------------Segundo bloque configuracion------------------------*/
 
+
 .section_block_one_column_two{
     display: flex;
     flex-direction: column;
-
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     background: #0808083f;
     backdrop-filter: blur(6px);
     width: 800px;
@@ -194,10 +194,11 @@ input::placeholder{
     /*margin-bottom: 10px;*/
     padding-left: 30px;
     padding-right: 30px;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 30px;
     /*justify-content: space-evenly;*/
     line-height: 29px;
+    padding-bottom: 50px;
+    
 
 
 }
@@ -207,6 +208,7 @@ input::placeholder{
 .section_block_one_column_two_title{
     font-weight: bold;
     font-size: 20px;
+    padding-bottom: 20px;
 }
 
 
@@ -235,6 +237,7 @@ input::placeholder{
     padding-bottom: 20px;
     font-weight: bold;
     font-size: 20px;
+    padding-top: 20px;
 }
 
 .section_block_one_column_three_block_row_clima{
