@@ -35,6 +35,7 @@ window.addEventListener("load", () => {
     //Funcion - proceso del clima
 
     function clima(data) {
+        cityForm = data.city.name
         console.log(data);
         let temperaturaGradoValor = Math.round(data.list[0].main.temp);
         temperaturaGrado.innerHTML = `${temperaturaGradoValor} °`
@@ -50,17 +51,22 @@ window.addEventListener("load", () => {
         temperaturaMax.innerHTML = `${maxTemp}°`
         temperaturaMin.innerHTML = `${minTemp}°`
 
-        const choiceSvg = {
-            'Thuderstorm': 'thunder.svg',
-            'Drizzle': 'rainy-2.svg',
-            'Rain': 'rainy-7.svg',
-            'Snow': 'snowy-6.svg',
-            'Clear': 'day.svg',
-            'Clouds': 'cloudy-day-1.svg',
-            'Atmosphere': 'weather.svg'
+        const icon = data.list[0].weather[0].icon
+        iconoClima.src = `img/animated/${icon}.svg`;
+
+        console.log(iconoClima);
+
+        let countIndex = 0
+        //Bucle extended weather
+        for (let index = 1; index < 6; index++) {
+            countIndex += 1
+            let tempExtendedWeather = document.getElementById('extendedWeather0'+countIndex);
+            tempExtendedWeather.innerHTML = Math.round(data.list[countIndex].main.temp)+"°"
+            const ExtendedWeatherIco = data.list[countIndex].weather[0].icon
+            document.getElementById("iconoClima0"+countIndex).src = `img/animated/${ExtendedWeatherIco}.svg`;
+            
         }
-        const icon = choiceSvg[data.list[0].weather[0].main] || 'cloudy-day-1.svg';
-        iconoClima.src = `img/animated/${icon}`;
+
 
     }
 
@@ -112,8 +118,6 @@ window.addEventListener("load", () => {
 
         const URLAPICITY = `https://api.openweathermap.org/data/2.5/forecast?q=${cityForm}&APPID=6752644c4b10d307e40b484055d4f5a5&units=metric`
 
-        /*Para averiguar los dias seleccionados `https://api.openweathermap.org/data/2.5/forecast?q=${cityForm}&APPID=6752644c4b10d307e40b484055d4f5a5&units=metric`*/
-
         fetch(URLAPICITY)
             .then(response=>{return response.json()})
             .then(data=>{
@@ -133,7 +137,6 @@ window.addEventListener("load", () => {
 
                 console.log(URLAPICITY);
     }
-    
     
     //Event
     
